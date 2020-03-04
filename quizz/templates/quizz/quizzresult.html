@@ -1,0 +1,53 @@
+{% extends "quizz/quizzbase.html" %}
+{% block content %}
+<body>
+    {% if question_exists == False %}
+            <!--<<b><p> Próximo jogo em: <span id="countdownbuttontimer">20 </span> Segundos</p></b>
+            script>
+            var timeleft = 20;
+            var buttonTimer = setInterval(function () {
+                timeleft--;
+                document.getElementById("countdownbuttontimer").textContent = timeleft;
+                if (timeleft <= 0) {
+                    clearInterval(buttonTimer);
+                    var button = document.getElementById("button");
+                    button.click()
+                }
+            }, 1000);
+            </script>-->
+            <h1>Respostas escolhidas:</h1>
+            <h1 style="color:{% if selected_answer_player_1 == correct_answer%} green {% else %} red {% endif %};">Jogador 1: {{selected_answer_player_1}}</h1>
+            <h1 style="color:{% if selected_answer_player_2 == correct_answer%} green {% else %} red {% endif %};">Jogador 2: {{selected_answer_player_2}}</h1>
+            <h1 style="color:{% if selected_answer_player_3 == correct_answer%} green {% else %} red {% endif %};">Jogador 3: {{selected_answer_player_3}}</h1>
+            <p><h1 style="color:{% if selected_answer_player_4 == correct_answer%} green {% else %} red {% endif %};">Jogador 4: {{selected_answer_player_4}}</h1></p>
+            <h1>Resposta Correta: {{correct_answer}}</h1>
+            <p><h1>Respostas certas num total de {{number_answer}}:</h1></p>
+            <h1>Jogador 1: {{number_correct_answer_player_1}}</h1>
+            <h1>Jogador 2: {{number_correct_answer_player_2}}</h1>
+            <h1>Jogador 3: {{number_correct_answer_player_3}}</h1>
+            <h1>Jogador 4: {{number_correct_answer_player_4}}</h1>
+            <p><h1 style="text-align:center; font-size:300%">Quizz terminou! </h1></p>
+            <p style="text-align: center"><a style ="font-size: 250%" class="btn btn-default" id="button" href="{% url 'quizz_home' %}">Reset</a></p>
+        {% else %}
+            <b><p style="text-align: center; font-size:150%"> Próxima pergunta em: <span id="countdownbuttontimer">10 </span> Segundos</p></b>
+            <script>
+            var timeleft = 10;
+            var buttonTimer = setInterval(function () {
+                timeleft--;
+                document.getElementById("countdownbuttontimer").textContent = timeleft;
+                if (timeleft <= 0) {
+                    clearInterval(buttonTimer);
+                    var button = document.getElementById("button");
+                    button.click()
+                }
+            }, 1000);
+            </script>
+            <h1>Respostas escolhidas:</h1>
+            <h1 style="color:{% if selected_answer_player_1 == correct_answer%} green {% else %} red {% endif %};">Jogador 1: {{selected_answer_player_1}}</h1>
+            <h1 style="color:{% if selected_answer_player_2 == correct_answer%} green {% else %} red {% endif %};">Jogador 2: {{selected_answer_player_2}}</h1>
+            <h1 style="color:{% if selected_answer_player_3 == correct_answer%} green {% else %} red {% endif %};">Jogador 3: {{selected_answer_player_3}}</h1>
+            <p><h1 style="color:{% if selected_answer_player_4 == correct_answer%} green {% else %} red {% endif %};">Jogador 4: {{selected_answer_player_4}}</h1></p>
+            <h1>Resposta Correta: {{correct_answer}}</h1>
+            <a class="btn btn-default" id="button" href="{% url 'quizz_quizz' next_id %}" style="display:none">Continue</a>
+    {% endif %}
+{% endblock content %}

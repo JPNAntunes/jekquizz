@@ -1,0 +1,64 @@
+{% extends "quizz/quizzbase.html" %}
+    {% block content %}
+    <h1 style="text-align:center; color:blue">Bem-vindo ao jekQuizz!</h1>
+    <h1 style="text-align:center">Pressionem no botão vermelho quando estiverem prontos</h1>
+    <h1>Jogadores prontos:</h1>
+    <h1>Jogador 1:<span style="color:red" id="player_1_ready"> Not Ready</span></h1>
+    <h1>Jogador 2:<span style="color:red" id="player_2_ready"> Not Ready</span></h1>
+    <h1>Jogador 3:<span style="color:red" id="player_3_ready"> Not Ready</span></h1>
+    <h1>Jogador 4:<span style="color:red" id="player_4_ready"> Not Ready</span></h1>
+    <a class="btn btn-default" id="button" href="{% url 'quizz_quizz' question_id=1 %}" style="display:none">Começar!</a>
+    <script>
+    window.addEventListener('gamepadconnected', (event) => {
+        console.log('Connected');
+        console.log(event.gamepad);
+        window.requestAnimationFrame(quizzLoop);
+    })
+
+      
+    function quizzLoop() {
+        var player_1_ready = document.getElementById("player_1_ready");
+        var player_2_ready = document.getElementById("player_2_ready");
+        var player_3_ready = document.getElementById("player_3_ready");
+        var player_4_ready = document.getElementById("player_4_ready");   
+        var button = document.getElementById("button");
+        var gp = navigator.getGamepads()[0];
+        if (gp.buttons[0].value > 0 || gp.buttons[0].pressed == true) 
+        {
+            player_1_ready.innerHTML = " Ready"
+            player_1_ready.style ="color:green"
+        }
+        if (gp.buttons[15].value > 0 || gp.buttons[15].pressed == true)
+        {
+            player_4_ready.innerHTML = " Ready"
+            player_4_ready.style ="color:green"
+            console.log(player_4_ready.innerHTML.trim() == "Ready")
+        }
+        if(gp.buttons[10].value > 0 || gp.buttons[10].pressed == true)
+        {
+            player_3_ready.innerHTML = " Ready"
+            player_3_ready.style ="color:green"
+        }
+        if(gp.buttons[5].value > 0 || gp.buttons[5].pressed == true)
+        {
+            player_2_ready.innerHTML = " Ready"
+            player_2_ready.style ="color:green"
+        }
+        window.requestAnimationFrame(quizzLoop);
+       
+        }
+        setInterval(playerready, 500);
+        function playerready(){
+            if (player_1_ready.innerHTML.trim() == "Ready"){
+                if (player_2_ready.innerHTML.trim() == "Ready"){
+                    if (player_3_ready.innerHTML.trim() == "Ready"){
+                        if (player_4_ready.innerHTML.trim() == "Ready"){
+                            button.click()
+                        }
+                    }
+                }
+            }
+    }
+    </script>
+    {% endblock content %}
+

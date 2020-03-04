@@ -1,0 +1,15 @@
+{% extends "quizz/quizzbase.html" %}
+    {% block content %}
+    <form action="{% url 'quizz_quizz' question.question_id %}" id="form" method="post">
+    <b><p style="text-align: center; font-size: 150%"> Tempo restante: <span id="countdowntimer"> 20</span> Segundos</p></b>
+    <h1 style="text-align: center">{{ question.question}} </h1>
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% for answer in answers %}
+        <input type="number" name="answer_player_{{ forloop.counter }}" style="display:none" id="answer{{ forloop.counter }}" value="">
+        <label for="answer{{ forloop.counter }}" style="font-size:180%; color:{% if forloop.counter == 1  %} blue {% elif forloop.counter == 2 %} darkorange  {% elif forloop.counter == 3 %} green {% elif forloop.counter == 4 %} goldenrod {% endif %}" > {{ answer }} </label><span id="answer_{{forloop.counter}}_pk" style="display:none;">{{answer.pk}}</span><br>
+    {% endfor %}
+    </form>
+    <script src="/static/gp.js"></script>
+    {% endblock content %}
+
